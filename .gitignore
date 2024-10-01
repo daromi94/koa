@@ -1,0 +1,12 @@
+# Build
+build
+.gradle
+
+# IntelliJ IDEA
+.idea
+
+# Visual Studio Code
+.vscode
+
+# macOS
+.DS_Store
