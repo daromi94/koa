@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.kotlin.jvm)
 }
 
-group = "com.daromi.koa.datatypes"
+group = "com.daromi.koa.datasource"
 version = "0.1.0"
 
 repositories {
@@ -10,6 +10,8 @@ repositories {
 }
 
 dependencies {
+    implementation(project(":datatypes"))
+
     implementation(libs.arrow.vector)
     testImplementation(libs.kotlin.test)
 }

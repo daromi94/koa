@@ -1,12 +1,10 @@
 [versions]
 kotlin-jvm = "2.0.0"
 kotlin-test = "2.0.0"
-arrow-memory = "17.0.0"
 arrow-vector = "17.0.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin-test" }
-arrow-memory = { module = "org.apache.arrow:arrow-memory", version.ref = "arrow-memory" }
 arrow-vector = { module = "org.apache.arrow:arrow-vector", version.ref = "arrow-vector" }
 
 [plugins]

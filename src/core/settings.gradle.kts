@@ -4,3 +4,4 @@ plugins {
 
 rootProject.name = "core"
 include("datatypes")
+include("datasource")

@@ -2,7 +2,7 @@ package com.daromi.koa.datatypes
 
 import org.apache.arrow.vector.types.pojo.Schema
 
-class RecordBatch(
+class Batch(
     private val _schema: Schema,
     private val _size: Int,
     private val _columns: List<ColumnVector>,
