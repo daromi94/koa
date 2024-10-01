@@ -1,9 +1,8 @@
 plugins {
     alias(libs.plugins.kotlin.jvm)
-    application
 }
 
-group = "com.daromi.koa"
+group = "com.daromi.koa.datatypes"
 version = "0.1.0"
 
 repositories {
@@ -11,15 +10,13 @@ repositories {
 }
 
 dependencies {
+    implementation(libs.arrow.memory)
+    implementation(libs.arrow.vector)
     testImplementation(libs.kotlin.test)
 }
 
 kotlin {
     jvmToolchain(21)
-}
-
-application {
-    mainClass = "$group.cli.MainKt"
 }
 
 tasks.test {
