@@ -1,14 +1,16 @@
 package com.daromi.koa.logical
 
-import org.apache.arrow.vector.types.pojo.Schema
+import com.daromi.koa.datatypes.Schema
 
 interface LogicalPlan {
     val schema: Schema
 
     val children: List<LogicalPlan>
+
+    fun pretty(): String = format(this)
 }
 
-fun format(
+private fun format(
     plan: LogicalPlan,
     indent: Int = 0,
 ): String {

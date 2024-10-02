@@ -1,7 +1,7 @@
 package com.daromi.koa.datasource
 
 import com.daromi.koa.datatypes.Batch
-import org.apache.arrow.vector.types.pojo.Schema
+import com.daromi.koa.datatypes.Schema
 
 interface DataSource {
     val schema: Schema
