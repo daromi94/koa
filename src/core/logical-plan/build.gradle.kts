@@ -11,6 +11,7 @@ repositories {
 
 dependencies {
     implementation(project(":datatypes"))
+    implementation(project(":datasource"))
 
     implementation(libs.arrow.vector)
     testImplementation(libs.kotlin.test)

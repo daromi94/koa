@@ -8,11 +8,9 @@ class Column(
 ) : LogicalExpression {
     override fun toField(plan: LogicalPlan): Field {
         val field = plan.schema.fields.find { it.name == this.name }
-
         if (field == null) {
-            throw RuntimeException("no column named '${this.name}'")
+            throw NoSuchElementException("no column named '${this.name}'")
         }
-
         return field
     }
 
