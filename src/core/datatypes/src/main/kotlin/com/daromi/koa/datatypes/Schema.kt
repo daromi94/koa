@@ -5,7 +5,7 @@ import org.apache.arrow.vector.types.pojo.ArrowType
 data class Schema(
     val fields: List<Field>,
 ) {
-    fun select(fieldNames: List<String>): Schema {
+    fun project(fieldNames: List<String>): Schema {
         val fields = mutableListOf<Field>()
 
         for (fieldName in fieldNames) {

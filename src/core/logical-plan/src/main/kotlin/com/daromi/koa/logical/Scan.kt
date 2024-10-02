@@ -17,7 +17,7 @@ class Scan(
         return if (this.projection.isEmpty()) {
             schema
         } else {
-            schema.select(this.projection)
+            schema.project(this.projection)
         }
     }
 
