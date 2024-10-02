@@ -17,22 +17,6 @@ class Column(
     override fun toString(): String = "#${this.name}"
 }
 
-class LiteralByte(
-    private val n: Byte,
-) : LogicalExpression {
-    override fun toField(plan: LogicalPlan): Field = Field(this.n.toString(), ArrowTypes.Int8Type)
-
-    override fun toString(): String = "${this.n}"
-}
-
-class LiteralShort(
-    private val n: Short,
-) : LogicalExpression {
-    override fun toField(plan: LogicalPlan): Field = Field(this.n.toString(), ArrowTypes.Int16Type)
-
-    override fun toString(): String = "${this.n}"
-}
-
 class LiteralInteger(
     private val n: Int,
 ) : LogicalExpression {
