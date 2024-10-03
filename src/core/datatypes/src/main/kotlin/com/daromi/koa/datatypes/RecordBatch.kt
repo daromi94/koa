@@ -1,6 +1,6 @@
 package com.daromi.koa.datatypes
 
-data class Batch(
+data class RecordBatch(
     val schema: Schema,
     val columns: List<ColumnVector>,
 ) {

@@ -7,8 +7,8 @@ import com.daromi.koa.datatypes.Field
 value class Column(
     val name: String,
 ) : LogicalExpression {
-    override fun toField(logicalOperator: LogicalOperator): Field {
-        val field = logicalOperator.schema.fields.find { it.name == this.name }
+    override fun toField(context: LogicalOperator): Field {
+        val field = context.schema.fields.find { it.name == this.name }
         if (field == null) {
             throw NoSuchElementException("unknown column '${this.name}'")
         }
@@ -22,7 +22,7 @@ value class Column(
 value class BooleanLiteral(
     val b: Boolean,
 ) : LogicalExpression {
-    override fun toField(logicalOperator: LogicalOperator): Field = Field(this.b.toString(), ArrowTypes.BooleanType)
+    override fun toField(context: LogicalOperator): Field = Field(this.b.toString(), ArrowTypes.BooleanType)
 
     override fun toString(): String = "${this.b}"
 }
@@ -31,7 +31,7 @@ value class BooleanLiteral(
 value class IntegerLiteral(
     val n: Int,
 ) : LogicalExpression {
-    override fun toField(logicalOperator: LogicalOperator): Field = Field(this.n.toString(), ArrowTypes.Int32Type)
+    override fun toField(context: LogicalOperator): Field = Field(this.n.toString(), ArrowTypes.Int32Type)
 
     override fun toString(): String = "${this.n}"
 }
@@ -40,7 +40,7 @@ value class IntegerLiteral(
 value class LongLiteral(
     val n: Long,
 ) : LogicalExpression {
-    override fun toField(logicalOperator: LogicalOperator): Field = Field(this.n.toString(), ArrowTypes.Int64Type)
+    override fun toField(context: LogicalOperator): Field = Field(this.n.toString(), ArrowTypes.Int64Type)
 
     override fun toString(): String = "${this.n}"
 }
@@ -49,7 +49,7 @@ value class LongLiteral(
 value class FloatLiteral(
     val n: Float,
 ) : LogicalExpression {
-    override fun toField(logicalOperator: LogicalOperator): Field = Field(this.n.toString(), ArrowTypes.FloatType)
+    override fun toField(context: LogicalOperator): Field = Field(this.n.toString(), ArrowTypes.FloatType)
 
     override fun toString(): String = "${this.n}"
 }
@@ -58,7 +58,7 @@ value class FloatLiteral(
 value class DoubleLiteral(
     val n: Double,
 ) : LogicalExpression {
-    override fun toField(logicalOperator: LogicalOperator): Field = Field(this.n.toString(), ArrowTypes.DoubleType)
+    override fun toField(context: LogicalOperator): Field = Field(this.n.toString(), ArrowTypes.DoubleType)
 
     override fun toString(): String = "${this.n}"
 }
@@ -67,7 +67,7 @@ value class DoubleLiteral(
 value class StringLiteral(
     val str: String,
 ) : LogicalExpression {
-    override fun toField(logicalOperator: LogicalOperator): Field = Field(this.str, ArrowTypes.StringType)
+    override fun toField(context: LogicalOperator): Field = Field(this.str, ArrowTypes.StringType)
 
     override fun toString(): String = "'${this.str}'"
 }
@@ -78,7 +78,7 @@ abstract class BinaryBooleanExpression(
     val lhs: LogicalExpression,
     val rhs: LogicalExpression,
 ) : LogicalExpression {
-    override fun toField(logicalOperator: LogicalOperator): Field = Field(this.name, ArrowTypes.BooleanType)
+    override fun toField(context: LogicalOperator): Field = Field(this.name, ArrowTypes.BooleanType)
 
     override fun toString(): String = "${this.lhs} ${this.operator} ${this.rhs}"
 }
@@ -129,7 +129,7 @@ abstract class ArithmeticExpression(
     val lhs: LogicalExpression,
     val rhs: LogicalExpression,
 ) : LogicalExpression {
-    override fun toField(logicalOperator: LogicalOperator): Field = Field(this.name, this.lhs.toField(logicalOperator).type)
+    override fun toField(context: LogicalOperator): Field = Field(this.name, this.lhs.toField(context).type)
 
     override fun toString(): String = "${this.lhs} ${this.operator} ${this.rhs}"
 }
@@ -163,7 +163,7 @@ abstract class AggregateExpression(
     val name: String,
     val input: LogicalExpression,
 ) : LogicalExpression {
-    override fun toField(logicalOperator: LogicalOperator): Field = Field(this.name, this.input.toField(logicalOperator).type)
+    override fun toField(context: LogicalOperator): Field = Field(this.name, this.input.toField(context).type)
 
     override fun toString(): String = "${this.name}(${this.input})"
 }
@@ -187,7 +187,7 @@ class Avg(
 data class Count(
     val input: LogicalExpression,
 ) : LogicalExpression {
-    override fun toField(logicalOperator: LogicalOperator): Field = Field("COUNT", ArrowTypes.Int32Type)
+    override fun toField(context: LogicalOperator): Field = Field("COUNT", ArrowTypes.Int32Type)
 
     override fun toString(): String = "COUNT(${this.input})"
 }
