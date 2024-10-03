@@ -3,13 +3,14 @@ package com.daromi.koa.logical
 import com.daromi.koa.datatypes.ArrowTypes
 import com.daromi.koa.datatypes.Field
 
-class Column(
-    private val name: String,
+@JvmInline
+value class Column(
+    val name: String,
 ) : LogicalExpression {
-    override fun toField(plan: LogicalPlan): Field {
-        val field = plan.schema.fields.find { it.name == this.name }
+    override fun toField(logicalOperator: LogicalOperator): Field {
+        val field = logicalOperator.schema.fields.find { it.name == this.name }
         if (field == null) {
-            throw NoSuchElementException("no column named '${this.name}'")
+            throw NoSuchElementException("unknown column '${this.name}'")
         }
         return field
     }
@@ -17,53 +18,67 @@ class Column(
     override fun toString(): String = "#${this.name}"
 }
 
-class LiteralInteger(
-    private val n: Int,
+@JvmInline
+value class BooleanLiteral(
+    val b: Boolean,
 ) : LogicalExpression {
-    override fun toField(plan: LogicalPlan): Field = Field(this.n.toString(), ArrowTypes.Int32Type)
+    override fun toField(logicalOperator: LogicalOperator): Field = Field(this.b.toString(), ArrowTypes.BooleanType)
+
+    override fun toString(): String = "${this.b}"
+}
+
+@JvmInline
+value class IntegerLiteral(
+    val n: Int,
+) : LogicalExpression {
+    override fun toField(logicalOperator: LogicalOperator): Field = Field(this.n.toString(), ArrowTypes.Int32Type)
 
     override fun toString(): String = "${this.n}"
 }
 
-class LiteralLong(
-    private val n: Long,
+@JvmInline
+value class LongLiteral(
+    val n: Long,
 ) : LogicalExpression {
-    override fun toField(plan: LogicalPlan): Field = Field(this.n.toString(), ArrowTypes.Int64Type)
+    override fun toField(logicalOperator: LogicalOperator): Field = Field(this.n.toString(), ArrowTypes.Int64Type)
 
     override fun toString(): String = "${this.n}"
 }
 
-class LiteralFloat(
-    private val n: Float,
+@JvmInline
+value class FloatLiteral(
+    val n: Float,
 ) : LogicalExpression {
-    override fun toField(plan: LogicalPlan): Field = Field(this.n.toString(), ArrowTypes.FloatType)
+    override fun toField(logicalOperator: LogicalOperator): Field = Field(this.n.toString(), ArrowTypes.FloatType)
 
     override fun toString(): String = "${this.n}"
 }
 
-class LiteralDouble(
-    private val n: Double,
+@JvmInline
+value class DoubleLiteral(
+    val n: Double,
 ) : LogicalExpression {
-    override fun toField(plan: LogicalPlan): Field = Field(this.n.toString(), ArrowTypes.DoubleType)
+    override fun toField(logicalOperator: LogicalOperator): Field = Field(this.n.toString(), ArrowTypes.DoubleType)
 
     override fun toString(): String = "${this.n}"
 }
 
-class LiteralString(
-    private val str: String,
+@JvmInline
+value class StringLiteral(
+    val str: String,
 ) : LogicalExpression {
-    override fun toField(plan: LogicalPlan): Field = Field(this.str, ArrowTypes.StringType)
+    override fun toField(logicalOperator: LogicalOperator): Field = Field(this.str, ArrowTypes.StringType)
 
     override fun toString(): String = "'${this.str}'"
 }
 
-abstract class BooleanBinaryExpression(
-    private val name: String,
-    private val operator: String,
-    private val lhs: LogicalExpression,
-    private val rhs: LogicalExpression,
+abstract class BinaryBooleanExpression(
+    val name: String,
+    val operator: String,
+    val lhs: LogicalExpression,
+    val rhs: LogicalExpression,
 ) : LogicalExpression {
-    override fun toField(plan: LogicalPlan): Field = Field(this.name, ArrowTypes.BooleanType)
+    override fun toField(logicalOperator: LogicalOperator): Field = Field(this.name, ArrowTypes.BooleanType)
 
     override fun toString(): String = "${this.lhs} ${this.operator} ${this.rhs}"
 }
@@ -71,50 +86,50 @@ abstract class BooleanBinaryExpression(
 class Equals(
     lhs: LogicalExpression,
     rhs: LogicalExpression,
-) : BooleanBinaryExpression("eq", "=", lhs, rhs)
+) : BinaryBooleanExpression("eq", "=", lhs, rhs)
 
 class NotEquals(
     lhs: LogicalExpression,
     rhs: LogicalExpression,
-) : BooleanBinaryExpression("neq", "!=", lhs, rhs)
+) : BinaryBooleanExpression("neq", "!=", lhs, rhs)
 
 class GreaterThan(
     lhs: LogicalExpression,
     rhs: LogicalExpression,
-) : BooleanBinaryExpression("gt", ">", lhs, rhs)
+) : BinaryBooleanExpression("gt", ">", lhs, rhs)
 
 class GreaterThanOrEquals(
     lhs: LogicalExpression,
     rhs: LogicalExpression,
-) : BooleanBinaryExpression("gte", ">=", lhs, rhs)
+) : BinaryBooleanExpression("gte", ">=", lhs, rhs)
 
 class LessThan(
     lhs: LogicalExpression,
     rhs: LogicalExpression,
-) : BooleanBinaryExpression("lt", "<", lhs, rhs)
+) : BinaryBooleanExpression("lt", "<", lhs, rhs)
 
 class LessThanOrEquals(
     lhs: LogicalExpression,
     rhs: LogicalExpression,
-) : BooleanBinaryExpression("lte", "<=", lhs, rhs)
+) : BinaryBooleanExpression("lte", "<=", lhs, rhs)
 
 class And(
     lhs: LogicalExpression,
     rhs: LogicalExpression,
-) : BooleanBinaryExpression("and", "AND", lhs, rhs)
+) : BinaryBooleanExpression("and", "AND", lhs, rhs)
 
 class Or(
     lhs: LogicalExpression,
     rhs: LogicalExpression,
-) : BooleanBinaryExpression("or", "OR", lhs, rhs)
+) : BinaryBooleanExpression("or", "OR", lhs, rhs)
 
 abstract class ArithmeticExpression(
-    private val name: String,
-    private val operator: String,
-    private val lhs: LogicalExpression,
-    private val rhs: LogicalExpression,
+    val name: String,
+    val operator: String,
+    val lhs: LogicalExpression,
+    val rhs: LogicalExpression,
 ) : LogicalExpression {
-    override fun toField(plan: LogicalPlan): Field = Field(this.name, this.lhs.toField(plan).type)
+    override fun toField(logicalOperator: LogicalOperator): Field = Field(this.name, this.lhs.toField(logicalOperator).type)
 
     override fun toString(): String = "${this.lhs} ${this.operator} ${this.rhs}"
 }
@@ -145,10 +160,10 @@ class Modulus(
 ) : ArithmeticExpression("mod", "%", lhs, rhs)
 
 abstract class AggregateExpression(
-    private val name: String,
-    private val input: LogicalExpression,
+    val name: String,
+    val input: LogicalExpression,
 ) : LogicalExpression {
-    override fun toField(plan: LogicalPlan): Field = Field(this.name, this.input.toField(plan).type)
+    override fun toField(logicalOperator: LogicalOperator): Field = Field(this.name, this.input.toField(logicalOperator).type)
 
     override fun toString(): String = "${this.name}(${this.input})"
 }
@@ -169,10 +184,10 @@ class Avg(
     input: LogicalExpression,
 ) : AggregateExpression("AVG", input)
 
-class Count(
-    private val input: LogicalExpression,
+data class Count(
+    val input: LogicalExpression,
 ) : LogicalExpression {
-    override fun toField(plan: LogicalPlan): Field = Field("COUNT", ArrowTypes.Int32Type)
+    override fun toField(logicalOperator: LogicalOperator): Field = Field("COUNT", ArrowTypes.Int32Type)
 
     override fun toString(): String = "COUNT(${this.input})"
 }

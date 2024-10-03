@@ -11,7 +11,7 @@ data class Schema(
         for (fieldName in fieldNames) {
             val field = this.fields.find { it.name == fieldName }
             if (field == null) {
-                throw IllegalArgumentException("no field named '$fieldName'")
+                throw IllegalArgumentException("unknown field '$fieldName'")
             }
             fields.add(field)
         }

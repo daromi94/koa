@@ -1,8 +1,12 @@
 package com.daromi.koa.datatypes
 
-class Batch(
-    private val schema: Schema,
-    private val columns: List<ColumnVector>,
+data class Batch(
+    val schema: Schema,
+    val columns: List<ColumnVector>,
 ) {
-    fun get(index: Int): ColumnVector = this.columns[index]
+    fun get(index: Int): ColumnVector {
+        assert(index in 0..<this.columns.size)
+
+        return this.columns[index]
+    }
 }

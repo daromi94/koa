@@ -3,22 +3,18 @@ package com.daromi.koa.logical
 import com.daromi.koa.datasource.DataSource
 import com.daromi.koa.datatypes.Schema
 
-class Scan(
-    private val dataSource: DataSource,
-    private val projection: List<String>,
-) : LogicalPlan {
+data class Scan(
+    val dataSource: DataSource,
+    val projection: List<String>,
+) : LogicalOperator {
     override val schema: Schema = deriveSchema()
 
-    override val children: List<LogicalPlan> get() = emptyList()
+    override val children: List<LogicalOperator> = emptyList()
 
     private fun deriveSchema(): Schema {
         val schema = this.dataSource.schema
 
-        return if (this.projection.isEmpty()) {
-            schema
-        } else {
-            schema.project(this.projection)
-        }
+        return if (this.projection.isEmpty()) schema else schema.project(this.projection)
     }
 
     override fun toString(): String = "Scan: projection=${this.projection}"

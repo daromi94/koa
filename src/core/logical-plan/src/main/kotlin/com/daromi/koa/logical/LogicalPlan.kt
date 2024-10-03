@@ -3,20 +3,28 @@ package com.daromi.koa.logical
 import com.daromi.koa.datatypes.Schema
 
 interface LogicalPlan {
+    val root: LogicalOperator
+
+    fun pretty(): String = format(this.root)
+}
+
+interface LogicalOperator {
     val schema: Schema
 
-    val children: List<LogicalPlan>
-
-    fun pretty(): String = format(this)
+    val children: List<LogicalOperator>
 }
 
 private fun format(
-    plan: LogicalPlan,
+    logicalOperator: LogicalOperator,
     indent: Int = 0,
 ): String {
-    val b = StringBuilder()
-    (0 until indent).forEach { _ -> b.append("\t") }
-    b.append(plan).append("\n")
-    plan.children.forEach { b.append(format(it, indent + 1)) }
-    return b.toString()
+    val sb = StringBuilder()
+
+    repeat(indent) { sb.append("\t") }
+
+    sb.append(logicalOperator.toString()).append("\n")
+
+    logicalOperator.children.forEach { sb.append(format(it, indent + 1)) }
+
+    return sb.toString()
 }
