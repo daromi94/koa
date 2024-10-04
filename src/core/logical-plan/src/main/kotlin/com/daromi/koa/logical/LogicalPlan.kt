@@ -15,16 +15,16 @@ interface LogicalOperator {
 }
 
 private fun format(
-    logicalOperator: LogicalOperator,
+    operator: LogicalOperator,
     indent: Int = 0,
 ): String {
     val sb = StringBuilder()
 
     repeat(indent) { sb.append("\t") }
 
-    sb.append(logicalOperator.toString()).append("\n")
+    sb.append(operator.toString()).append("\n")
 
-    logicalOperator.children.forEach { sb.append(format(it, indent + 1)) }
+    operator.children.forEach { sb.append(format(it, indent + 1)) }
 
     return sb.toString()
 }
