@@ -2,7 +2,7 @@ package com.daromi.koa.logical
 
 import com.daromi.koa.datatypes.Schema
 
-data class Projection(
+data class Project(
     val input: LogicalOperator,
     val expressions: List<LogicalExpression>,
 ) : LogicalOperator {
@@ -16,5 +16,5 @@ data class Projection(
         return Schema(fields)
     }
 
-    override fun toString(): String = "Projection: ${this.expressions}"
+    override fun toString(): String = "Project: ${this.expressions}"
 }

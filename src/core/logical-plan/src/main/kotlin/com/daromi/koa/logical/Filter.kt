@@ -2,7 +2,7 @@ package com.daromi.koa.logical
 
 import com.daromi.koa.datatypes.Schema
 
-data class Selection(
+data class Filter(
     val input: LogicalOperator,
     val expression: LogicalExpression,
 ) : LogicalOperator {
