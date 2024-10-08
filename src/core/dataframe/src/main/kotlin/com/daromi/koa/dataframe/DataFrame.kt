@@ -38,7 +38,7 @@ class DataFrame private constructor(
         aggregateExpressions: List<AggregateExpression>,
     ): DataFrame {
         val operator = Aggregate(this.root, groupByExpressions, aggregateExpressions)
-        return DataFrame(this.root)
+        return DataFrame(operator)
     }
 
     fun logicalPlan(): LogicalPlan = LogicalPlan(this.root)

@@ -17,5 +17,5 @@ data class Scan(
         return if (this.projection.isEmpty()) schema else schema.project(this.projection)
     }
 
-    override fun toString(): String = "Scan: datasource=${this.dataSource}, projection=${this.projection}"
+    override fun toString(): String = "Scan: datasource=${this.dataSource.name}, projection=${this.projection}"
 }
