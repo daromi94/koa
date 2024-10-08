@@ -2,9 +2,9 @@ package com.daromi.koa.logical
 
 import com.daromi.koa.datatypes.Schema
 
-interface LogicalPlan {
-    val root: LogicalOperator
-
+data class LogicalPlan(
+    val root: LogicalOperator,
+) {
     fun pretty(): String = format(this.root)
 }
 
