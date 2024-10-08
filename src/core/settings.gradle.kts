@@ -6,3 +6,4 @@ rootProject.name = "core"
 include("datatypes")
 include("datasource")
 include("logical-plan")
+include("dataframe")
