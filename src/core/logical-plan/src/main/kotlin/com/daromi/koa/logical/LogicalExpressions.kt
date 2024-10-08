@@ -24,7 +24,7 @@ value class BooleanLiteral(
 ) : LogicalExpression {
     override fun toField(context: LogicalOperator): Field = Field(this.b.toString(), ArrowTypes.BooleanType)
 
-    override fun toString(): String = "${this.b}"
+    override fun toString(): String = this.b.toString()
 }
 
 @JvmInline
@@ -33,7 +33,7 @@ value class IntegerLiteral(
 ) : LogicalExpression {
     override fun toField(context: LogicalOperator): Field = Field(this.n.toString(), ArrowTypes.Int32Type)
 
-    override fun toString(): String = "${this.n}"
+    override fun toString(): String = this.n.toString()
 }
 
 @JvmInline
@@ -42,7 +42,7 @@ value class LongLiteral(
 ) : LogicalExpression {
     override fun toField(context: LogicalOperator): Field = Field(this.n.toString(), ArrowTypes.Int64Type)
 
-    override fun toString(): String = "${this.n}"
+    override fun toString(): String = this.n.toString()
 }
 
 @JvmInline
@@ -51,7 +51,7 @@ value class FloatLiteral(
 ) : LogicalExpression {
     override fun toField(context: LogicalOperator): Field = Field(this.n.toString(), ArrowTypes.FloatType)
 
-    override fun toString(): String = "${this.n}"
+    override fun toString(): String = this.n.toString()
 }
 
 @JvmInline
@@ -60,7 +60,7 @@ value class DoubleLiteral(
 ) : LogicalExpression {
     override fun toField(context: LogicalOperator): Field = Field(this.n.toString(), ArrowTypes.DoubleType)
 
-    override fun toString(): String = "${this.n}"
+    override fun toString(): String = this.n.toString()
 }
 
 @JvmInline
@@ -69,7 +69,7 @@ value class StringLiteral(
 ) : LogicalExpression {
     override fun toField(context: LogicalOperator): Field = Field(this.str, ArrowTypes.StringType)
 
-    override fun toString(): String = "'${this.str}'"
+    override fun toString(): String = "\"${this.str}\""
 }
 
 abstract class BinaryBooleanExpression(
