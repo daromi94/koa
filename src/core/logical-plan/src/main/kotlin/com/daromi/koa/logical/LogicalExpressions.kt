@@ -18,59 +18,73 @@ value class Column(
     override fun toString(): String = "#${this.name}"
 }
 
+fun col(name: String): Column = Column(name)
+
 @JvmInline
 value class BooleanLiteral(
-    val b: Boolean,
+    val value: Boolean,
 ) : LogicalExpression {
-    override fun toField(context: LogicalOperator): Field = Field(this.b.toString(), ArrowTypes.BooleanType)
+    override fun toField(context: LogicalOperator): Field = Field(this.value.toString(), ArrowTypes.BooleanType)
 
-    override fun toString(): String = this.b.toString()
+    override fun toString(): String = this.value.toString()
 }
+
+fun lit(value: Boolean): BooleanLiteral = BooleanLiteral(value)
 
 @JvmInline
 value class IntegerLiteral(
-    val n: Int,
+    val value: Int,
 ) : LogicalExpression {
-    override fun toField(context: LogicalOperator): Field = Field(this.n.toString(), ArrowTypes.Int32Type)
+    override fun toField(context: LogicalOperator): Field = Field(this.value.toString(), ArrowTypes.Int32Type)
 
-    override fun toString(): String = this.n.toString()
+    override fun toString(): String = this.value.toString()
 }
+
+fun lit(value: Int): IntegerLiteral = IntegerLiteral(value)
 
 @JvmInline
 value class LongLiteral(
-    val n: Long,
+    val value: Long,
 ) : LogicalExpression {
-    override fun toField(context: LogicalOperator): Field = Field(this.n.toString(), ArrowTypes.Int64Type)
+    override fun toField(context: LogicalOperator): Field = Field(this.value.toString(), ArrowTypes.Int64Type)
 
-    override fun toString(): String = this.n.toString()
+    override fun toString(): String = this.value.toString()
 }
+
+fun lit(value: Long): LongLiteral = LongLiteral(value)
 
 @JvmInline
 value class FloatLiteral(
-    val n: Float,
+    val value: Float,
 ) : LogicalExpression {
-    override fun toField(context: LogicalOperator): Field = Field(this.n.toString(), ArrowTypes.FloatType)
+    override fun toField(context: LogicalOperator): Field = Field(this.value.toString(), ArrowTypes.FloatType)
 
-    override fun toString(): String = this.n.toString()
+    override fun toString(): String = this.value.toString()
 }
+
+fun lit(value: Float): FloatLiteral = FloatLiteral(value)
 
 @JvmInline
 value class DoubleLiteral(
-    val n: Double,
+    val value: Double,
 ) : LogicalExpression {
-    override fun toField(context: LogicalOperator): Field = Field(this.n.toString(), ArrowTypes.DoubleType)
+    override fun toField(context: LogicalOperator): Field = Field(this.value.toString(), ArrowTypes.DoubleType)
 
-    override fun toString(): String = this.n.toString()
+    override fun toString(): String = this.value.toString()
 }
+
+fun lit(value: Double): DoubleLiteral = DoubleLiteral(value)
 
 @JvmInline
 value class StringLiteral(
-    val str: String,
+    val value: String,
 ) : LogicalExpression {
-    override fun toField(context: LogicalOperator): Field = Field(this.str, ArrowTypes.StringType)
+    override fun toField(context: LogicalOperator): Field = Field(this.value, ArrowTypes.StringType)
 
-    override fun toString(): String = "\"${this.str}\""
+    override fun toString(): String = "\"${this.value}\""
 }
+
+fun lit(value: String): StringLiteral = StringLiteral(value)
 
 abstract class BinaryBooleanExpression(
     val name: String,
@@ -88,40 +102,56 @@ class Equals(
     rhs: LogicalExpression,
 ) : BinaryBooleanExpression("eq", "=", lhs, rhs)
 
+infix fun LogicalExpression.eq(rhs: LogicalExpression): Equals = Equals(this, rhs)
+
 class NotEquals(
     lhs: LogicalExpression,
     rhs: LogicalExpression,
 ) : BinaryBooleanExpression("neq", "!=", lhs, rhs)
+
+infix fun LogicalExpression.neq(rhs: LogicalExpression): NotEquals = NotEquals(this, rhs)
 
 class GreaterThan(
     lhs: LogicalExpression,
     rhs: LogicalExpression,
 ) : BinaryBooleanExpression("gt", ">", lhs, rhs)
 
+infix fun LogicalExpression.gt(rhs: LogicalExpression): GreaterThan = GreaterThan(this, rhs)
+
 class GreaterThanOrEquals(
     lhs: LogicalExpression,
     rhs: LogicalExpression,
 ) : BinaryBooleanExpression("gte", ">=", lhs, rhs)
+
+infix fun LogicalExpression.gte(rhs: LogicalExpression): GreaterThanOrEquals = GreaterThanOrEquals(this, rhs)
 
 class LessThan(
     lhs: LogicalExpression,
     rhs: LogicalExpression,
 ) : BinaryBooleanExpression("lt", "<", lhs, rhs)
 
+infix fun LogicalExpression.lt(rhs: LogicalExpression): LessThan = LessThan(this, rhs)
+
 class LessThanOrEquals(
     lhs: LogicalExpression,
     rhs: LogicalExpression,
 ) : BinaryBooleanExpression("lte", "<=", lhs, rhs)
+
+infix fun LogicalExpression.lte(rhs: LogicalExpression): LessThanOrEquals = LessThanOrEquals(this, rhs)
 
 class And(
     lhs: LogicalExpression,
     rhs: LogicalExpression,
 ) : BinaryBooleanExpression("and", "AND", lhs, rhs)
 
+infix fun LogicalExpression.and(rhs: LogicalExpression): And = And(this, rhs)
+
 class Or(
     lhs: LogicalExpression,
     rhs: LogicalExpression,
 ) : BinaryBooleanExpression("or", "OR", lhs, rhs)
+
+infix fun LogicalExpression.or(rhs: LogicalExpression): Or = Or(this, rhs)
 
 abstract class ArithmeticExpression(
     val name: String,
@@ -139,25 +169,35 @@ class Add(
     rhs: LogicalExpression,
 ) : ArithmeticExpression("add", "+", lhs, rhs)
 
+infix fun LogicalExpression.plus(rhs: LogicalExpression): Add = Add(this, rhs)
+
 class Subtract(
     lhs: LogicalExpression,
     rhs: LogicalExpression,
 ) : ArithmeticExpression("sub", "-", lhs, rhs)
+
+infix fun LogicalExpression.minus(rhs: LogicalExpression): Subtract = Subtract(this, rhs)
 
 class Multiply(
     lhs: LogicalExpression,
     rhs: LogicalExpression,
 ) : ArithmeticExpression("mul", "*", lhs, rhs)
 
+infix fun LogicalExpression.times(rhs: LogicalExpression): Multiply = Multiply(this, rhs)
+
 class Divide(
     lhs: LogicalExpression,
     rhs: LogicalExpression,
 ) : ArithmeticExpression("div", "/", lhs, rhs)
 
+infix fun LogicalExpression.div(rhs: LogicalExpression): Divide = Divide(this, rhs)
+
 class Modulus(
     lhs: LogicalExpression,
     rhs: LogicalExpression,
 ) : ArithmeticExpression("mod", "%", lhs, rhs)
+
+infix fun LogicalExpression.rem(rhs: LogicalExpression): Modulus = Modulus(this, rhs)
 
 abstract class AggregateExpression(
     val name: String,
