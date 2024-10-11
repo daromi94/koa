@@ -169,35 +169,35 @@ class Add(
     rhs: LogicalExpression,
 ) : ArithmeticExpression("add", "+", lhs, rhs)
 
-infix fun LogicalExpression.plus(rhs: LogicalExpression): Add = Add(this, rhs)
+infix operator fun LogicalExpression.plus(rhs: LogicalExpression): Add = Add(this, rhs)
 
 class Subtract(
     lhs: LogicalExpression,
     rhs: LogicalExpression,
 ) : ArithmeticExpression("sub", "-", lhs, rhs)
 
-infix fun LogicalExpression.minus(rhs: LogicalExpression): Subtract = Subtract(this, rhs)
+infix operator fun LogicalExpression.minus(rhs: LogicalExpression): Subtract = Subtract(this, rhs)
 
 class Multiply(
     lhs: LogicalExpression,
     rhs: LogicalExpression,
 ) : ArithmeticExpression("mul", "*", lhs, rhs)
 
-infix fun LogicalExpression.times(rhs: LogicalExpression): Multiply = Multiply(this, rhs)
+infix operator fun LogicalExpression.times(rhs: LogicalExpression): Multiply = Multiply(this, rhs)
 
 class Divide(
     lhs: LogicalExpression,
     rhs: LogicalExpression,
 ) : ArithmeticExpression("div", "/", lhs, rhs)
 
-infix fun LogicalExpression.div(rhs: LogicalExpression): Divide = Divide(this, rhs)
+infix operator fun LogicalExpression.div(rhs: LogicalExpression): Divide = Divide(this, rhs)
 
 class Modulus(
     lhs: LogicalExpression,
     rhs: LogicalExpression,
 ) : ArithmeticExpression("mod", "%", lhs, rhs)
 
-infix fun LogicalExpression.rem(rhs: LogicalExpression): Modulus = Modulus(this, rhs)
+infix operator fun LogicalExpression.rem(rhs: LogicalExpression): Modulus = Modulus(this, rhs)
 
 abstract class AggregateExpression(
     val name: String,
