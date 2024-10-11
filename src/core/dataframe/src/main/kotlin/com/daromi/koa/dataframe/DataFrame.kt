@@ -23,8 +23,8 @@ class DataFrame private constructor(
         }
     }
 
-    fun project(expressions: List<LogicalExpression>): DataFrame {
-        val operator = Project(this.root, expressions)
+    fun project(vararg expressions: LogicalExpression): DataFrame {
+        val operator = Project(this.root, expressions.toList())
         return DataFrame(operator)
     }
 
