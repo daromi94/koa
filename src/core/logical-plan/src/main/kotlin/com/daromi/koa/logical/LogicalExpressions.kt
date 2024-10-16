@@ -154,13 +154,13 @@ fun lit(value: String): StringLiteral = StringLiteral(value)
 
 abstract class BinaryBooleanExpression(
     val name: String,
-    val operator: String,
+    val symbol: String,
     val lhs: LogicalExpression,
     val rhs: LogicalExpression,
 ) : LogicalExpression {
     override fun toField(context: LogicalOperator): Field = Field(this.name, ArrowTypes.BooleanType)
 
-    override fun toString(): String = "${this.lhs} ${this.operator} ${this.rhs}"
+    override fun toString(): String = "${this.lhs} ${this.symbol} ${this.rhs}"
 }
 
 class Equals(
@@ -219,49 +219,49 @@ class Or(
 
 infix fun LogicalExpression.or(rhs: LogicalExpression): Or = Or(this, rhs)
 
-abstract class ArithmeticExpression(
+abstract class BinaryArithmeticExpression(
     val name: String,
-    val operator: String,
+    val symbol: String,
     val lhs: LogicalExpression,
     val rhs: LogicalExpression,
 ) : LogicalExpression {
     override fun toField(context: LogicalOperator): Field = Field(this.name, this.lhs.toField(context).type)
 
-    override fun toString(): String = "${this.lhs} ${this.operator} ${this.rhs}"
+    override fun toString(): String = "${this.lhs} ${this.symbol} ${this.rhs}"
 }
 
 class Add(
     lhs: LogicalExpression,
     rhs: LogicalExpression,
-) : ArithmeticExpression("add", "+", lhs, rhs)
+) : BinaryArithmeticExpression("add", "+", lhs, rhs)
 
 infix operator fun LogicalExpression.plus(rhs: LogicalExpression): Add = Add(this, rhs)
 
 class Subtract(
     lhs: LogicalExpression,
     rhs: LogicalExpression,
-) : ArithmeticExpression("sub", "-", lhs, rhs)
+) : BinaryArithmeticExpression("sub", "-", lhs, rhs)
 
 infix operator fun LogicalExpression.minus(rhs: LogicalExpression): Subtract = Subtract(this, rhs)
 
 class Multiply(
     lhs: LogicalExpression,
     rhs: LogicalExpression,
-) : ArithmeticExpression("mul", "*", lhs, rhs)
+) : BinaryArithmeticExpression("mul", "*", lhs, rhs)
 
 infix operator fun LogicalExpression.times(rhs: LogicalExpression): Multiply = Multiply(this, rhs)
 
 class Divide(
     lhs: LogicalExpression,
     rhs: LogicalExpression,
-) : ArithmeticExpression("div", "/", lhs, rhs)
+) : BinaryArithmeticExpression("div", "/", lhs, rhs)
 
 infix operator fun LogicalExpression.div(rhs: LogicalExpression): Divide = Divide(this, rhs)
 
 class Modulus(
     lhs: LogicalExpression,
     rhs: LogicalExpression,
-) : ArithmeticExpression("mod", "%", lhs, rhs)
+) : BinaryArithmeticExpression("mod", "%", lhs, rhs)
 
 infix operator fun LogicalExpression.rem(rhs: LogicalExpression): Modulus = Modulus(this, rhs)
 
