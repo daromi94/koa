@@ -32,7 +32,29 @@ value class BooleanLiteral(
 fun lit(value: Boolean): BooleanLiteral = BooleanLiteral(value)
 
 @JvmInline
-value class IntegerLiteral(
+value class Int8Literal(
+    val value: Byte,
+) : LogicalExpression {
+    override fun toField(context: LogicalOperator): Field = Field(this.value.toString(), ArrowTypes.Int8Type)
+
+    override fun toString(): String = this.value.toString()
+}
+
+fun lit(value: Byte): Int8Literal = Int8Literal(value)
+
+@JvmInline
+value class Int16Literal(
+    val value: Short,
+) : LogicalExpression {
+    override fun toField(context: LogicalOperator): Field = Field(this.value.toString(), ArrowTypes.Int16Type)
+
+    override fun toString(): String = this.value.toString()
+}
+
+fun lit(value: Short): Int16Literal = Int16Literal(value)
+
+@JvmInline
+value class Int32Literal(
     val value: Int,
 ) : LogicalExpression {
     override fun toField(context: LogicalOperator): Field = Field(this.value.toString(), ArrowTypes.Int32Type)
@@ -40,10 +62,10 @@ value class IntegerLiteral(
     override fun toString(): String = this.value.toString()
 }
 
-fun lit(value: Int): IntegerLiteral = IntegerLiteral(value)
+fun lit(value: Int): Int32Literal = Int32Literal(value)
 
 @JvmInline
-value class LongLiteral(
+value class Int64Literal(
     val value: Long,
 ) : LogicalExpression {
     override fun toField(context: LogicalOperator): Field = Field(this.value.toString(), ArrowTypes.Int64Type)
@@ -51,7 +73,51 @@ value class LongLiteral(
     override fun toString(): String = this.value.toString()
 }
 
-fun lit(value: Long): LongLiteral = LongLiteral(value)
+fun lit(value: Long): Int64Literal = Int64Literal(value)
+
+@JvmInline
+value class UInt8Literal(
+    val value: UByte,
+) : LogicalExpression {
+    override fun toField(context: LogicalOperator): Field = Field(this.value.toString(), ArrowTypes.UInt8Type)
+
+    override fun toString(): String = this.value.toString()
+}
+
+fun lit(value: UByte): UInt8Literal = UInt8Literal(value)
+
+@JvmInline
+value class UInt16Literal(
+    val value: UShort,
+) : LogicalExpression {
+    override fun toField(context: LogicalOperator): Field = Field(this.value.toString(), ArrowTypes.UInt16Type)
+
+    override fun toString(): String = this.value.toString()
+}
+
+fun lit(value: UShort): UInt16Literal = UInt16Literal(value)
+
+@JvmInline
+value class UInt32Literal(
+    val value: UInt,
+) : LogicalExpression {
+    override fun toField(context: LogicalOperator): Field = Field(this.value.toString(), ArrowTypes.UInt32Type)
+
+    override fun toString(): String = this.value.toString()
+}
+
+fun lit(value: UInt): UInt32Literal = UInt32Literal(value)
+
+@JvmInline
+value class UInt64Literal(
+    val value: ULong,
+) : LogicalExpression {
+    override fun toField(context: LogicalOperator): Field = Field(this.value.toString(), ArrowTypes.UInt64Type)
+
+    override fun toString(): String = this.value.toString()
+}
+
+fun lit(value: ULong): UInt64Literal = UInt64Literal(value)
 
 @JvmInline
 value class FloatLiteral(
