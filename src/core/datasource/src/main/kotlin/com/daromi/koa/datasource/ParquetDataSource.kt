@@ -8,7 +8,7 @@ class ParquetDataSource(
 ) : DataSource {
     override val schema: Schema = TODO("Not yet implemented")
 
-    override fun scan(projection: List<String>): Iterator<RecordBatch> {
+    override fun scan(projection: List<String>): Sequence<RecordBatch> {
         TODO("Not yet implemented")
     }
 }

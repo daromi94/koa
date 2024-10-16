@@ -6,5 +6,5 @@ import com.daromi.koa.datatypes.Schema
 interface DataSource {
     val schema: Schema
 
-    fun scan(projection: List<String>): Iterator<RecordBatch>
+    fun scan(projection: List<String>): Sequence<RecordBatch>
 }
