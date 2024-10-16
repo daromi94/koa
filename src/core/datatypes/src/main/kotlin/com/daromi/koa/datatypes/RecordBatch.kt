@@ -7,7 +7,7 @@ data class RecordBatch(
     val size: Int,
     val columns: List<ColumnVector>,
 ) {
-    fun get(index: Int): ColumnVector {
+    operator fun get(index: Int): ColumnVector {
         if (index !in 0..<this.columns.size) {
             throw IndexOutOfBoundsException("column index $index out of bounds")
         }
@@ -19,5 +19,5 @@ data class RecordBatch(
 interface ColumnVector {
     val type: ArrowType
 
-    fun get(index: Int): Any
+    operator fun get(index: Int): Any
 }
