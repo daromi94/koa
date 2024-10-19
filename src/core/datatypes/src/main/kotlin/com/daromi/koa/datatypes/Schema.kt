@@ -4,15 +4,17 @@ import org.apache.arrow.vector.types.pojo.ArrowType
 
 class Schema private constructor(private val fields: Map<FieldName, Field>) {
 
-  fun project(fieldNames: List<FieldName>): Schema {
+  fun field(name: FieldName): Field? = this.fields[name]
+
+  fun project(names: List<FieldName>): Schema {
     val fields = mutableMapOf<FieldName, Field>()
 
-    for (fieldName in fieldNames) {
-      val field = this.fields[fieldName]
+    for (name in names) {
+      val field = this.fields[name]
       if (field == null) {
-        throw IllegalArgumentException("unknown field '$fieldName'")
+        throw IllegalArgumentException("unknown field '$name'")
       }
-      fields[fieldName] = field
+      fields[name] = field
     }
 
     return Schema(fields)
