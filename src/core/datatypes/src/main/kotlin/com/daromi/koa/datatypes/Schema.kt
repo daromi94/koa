@@ -2,25 +2,25 @@ package com.daromi.koa.datatypes
 
 import org.apache.arrow.vector.types.pojo.ArrowType
 
-data class Schema(
-    val fields: List<Field>,
-) {
-    fun project(fieldNames: List<String>): Schema {
-        val fields = mutableListOf<Field>()
+class Schema private constructor(private val fields: Map<FieldName, Field>) {
 
-        for (fieldName in fieldNames) {
-            val field = this.fields.find { it.name == fieldName }
-            if (field == null) {
-                throw IllegalArgumentException("unknown field '$fieldName'")
-            }
-            fields.add(field)
-        }
+  fun project(fieldNames: List<FieldName>): Schema {
+    val fields = mutableMapOf<FieldName, Field>()
 
-        return Schema(fields)
+    for (fieldName in fieldNames) {
+      val field = this.fields[fieldName]
+      if (field == null) {
+        throw IllegalArgumentException("unknown field '$fieldName'")
+      }
+      fields[fieldName] = field
     }
+
+    return Schema(fields)
+  }
 }
 
-data class Field(
-    val name: String,
-    val type: ArrowType,
-)
+typealias FieldName = String
+
+typealias FieldType = ArrowType
+
+data class Field(val name: FieldName, val type: FieldType)
