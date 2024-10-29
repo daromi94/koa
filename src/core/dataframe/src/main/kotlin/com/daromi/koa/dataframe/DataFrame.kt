@@ -38,10 +38,10 @@ private constructor(
   }
 
   fun aggregate(
-      groupByExpressions: List<LogicalExpression>,
       aggregateExpressions: List<AggregateExpression>,
+      groupByExpressions: List<LogicalExpression>,
   ): DataFrame {
-    val operator = Aggregate(this.root, groupByExpressions, aggregateExpressions)
+    val operator = Aggregate(this.root, aggregateExpressions, groupByExpressions)
 
     return DataFrame(operator)
   }
