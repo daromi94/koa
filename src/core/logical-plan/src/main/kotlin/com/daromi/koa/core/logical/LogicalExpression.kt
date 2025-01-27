@@ -1,6 +1,6 @@
-package com.daromi.koa.logical
+package com.daromi.koa.core.logical
 
-import com.daromi.koa.datatypes.Field
+import com.daromi.koa.core.datatypes.Field
 
 interface LogicalExpression {
     fun toField(context: LogicalOperator): Field

@@ -1,7 +1,7 @@
-package com.daromi.koa.logical
+package com.daromi.koa.core.logical
 
-import com.daromi.koa.datasource.DataSource
-import com.daromi.koa.datatypes.Schema
+import com.daromi.koa.core.datasource.DataSource
+import com.daromi.koa.core.datatypes.Schema
 
 data class Scan(
     val dataSource: DataSource,

@@ -1,6 +1,6 @@
-package com.daromi.koa.physical
+package com.daromi.koa.core.physical
 
-import com.daromi.koa.datatypes.RecordBatch
+import com.daromi.koa.core.datatypes.RecordBatch
 import javax.xml.validation.Schema
 
 class PhysicalPlan(

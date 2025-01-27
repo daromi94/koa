@@ -1,7 +1,7 @@
-package com.daromi.koa.physical
+package com.daromi.koa.core.physical
 
-import com.daromi.koa.datatypes.ColumnVector
-import com.daromi.koa.datatypes.RecordBatch
+import com.daromi.koa.core.datatypes.ColumnVector
+import com.daromi.koa.core.datatypes.RecordBatch
 
 @JvmInline
 value class Column(

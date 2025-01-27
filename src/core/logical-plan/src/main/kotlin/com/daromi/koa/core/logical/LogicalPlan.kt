@@ -1,6 +1,6 @@
-package com.daromi.koa.logical
+package com.daromi.koa.core.logical
 
-import com.daromi.koa.datatypes.Schema
+import com.daromi.koa.core.datatypes.Schema
 
 class LogicalPlan(
     private val root: LogicalOperator,
@@ -21,9 +21,7 @@ private fun format(
     val sb = StringBuilder()
 
     repeat(indent) { sb.append("\t") }
-
     sb.append(operator.toString()).append("\n")
-
     operator.children.forEach { sb.append(format(it, indent + 1)) }
 
     return sb.toString()

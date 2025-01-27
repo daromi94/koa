@@ -1,6 +1,6 @@
-package com.daromi.koa.logical
+package com.daromi.koa.core.logical
 
-import com.daromi.koa.datatypes.Schema
+import com.daromi.koa.core.datatypes.Schema
 
 data class Project(
     val input: LogicalOperator,
